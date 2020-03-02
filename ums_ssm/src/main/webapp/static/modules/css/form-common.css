@@ -1,0 +1,18 @@
+.remark{
+    width: 346px;
+}
+.inputForm{
+    margin-left: 10px;
+}
+.inputForm>div{
+    margin-bottom: 15px;
+}
+.form-actions{
+    margin-left: 7%;
+}
+h4{
+    margin-left: 5%;
+}
+.cancel_btn{
+    margin-left: 20px;
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dtinone.modules.dao.MenuDao">
+    <resultMap id="menuResultMap" type="menu">
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+<!--    <select id="findAllValidate" resultMap="menuResultMap">-->
+<!--        SELECT m.`name`,m.url,m.create_time,m.update_time,m.`status`-->
+<!--        FROM-->
+<!--        menu m,role_menu rm,role r-->
+<!--        WHERE-->
+<!--        r.id=rm.role_id AND rm.menu_id=m.id-->
+
+<!--        AND r.id-->
+
+<!--        IN-->
+
+<!--        (SELECT r.id-->
+
+<!--        FROM-->
+
+<!--        `user` u,role r-->
+
+<!--        WHERE-->
+
+<!--        u.user_name =#{userName}-->
+
+<!--        AND u.role_id=r.id)-->
+
+<!--        and m.status!=1-->
+<!--    </select>-->
+
+    <select id="findValidateByName" parameterType="String" resultMap="menuResultMap">
+        SELECT * FROM `menu` WHERE name = #{name} and status!=1
+    </select>
+
+    <select id="findValidateByUrl" parameterType="String" resultMap="menuResultMap">
+        SELECT * FROM `menu` WHERE url = #{url} and status!=1
+    </select>
+
+    <select id="get" parameterType="String" resultMap="menuResultMap">
+        SELECT * FROM `menu` WHERE id = #{id}
+    </select>
+
+    <update id="delete" parameterType="String">
+        UPDATE `menu` SET `status` = 1 WHERE id=#{id}
+    </update>
+
+    <!--统计计数-->
+    <select id="count" parameterType="menu" resultType="int">
+        select count(*)
+        <include refid="menuPageCommon"></include>
+    </select>
+
+    <select id="find" resultMap="menuResultMap">
+                select *
+        <include refid="menuPageCommon"></include>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <update id="updatePart" parameterType="menu">
+        update `menu`
+        set name=#{name},status=#{status},update_time=#{updateTime},url=#{url}
+         where id=#{id}
+    </update>
+
+    <insert id="add" parameterType="menu">
+        insert into `menu`(id,name,status,create_time,url)
+        values (#{id},#{name},#{status},#{createTime},#{url})
+    </insert>
+
+    <!--  向第三张表加数据  -->
+    <insert id="insert">
+        insert into `role_menu` (id, menu_id, role_id) values (#{id},#{menuId},#{roleId})
+    </insert>
+    <sql id="menuPageCommon">
+        from `menu`
+        <where>
+            <if test="menu.name!=null and menu.name!=''">
+                and `name`=#{menu.name}
+            </if>
+            <if test="menu.status!=null and menu.status!='-1'">
+                and status=#{menu.status}
+            </if>
+        </where>
+    </sql>
+</mapper>

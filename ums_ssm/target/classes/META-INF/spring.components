@@ -1,0 +1,7 @@
+com.dtinone.modules.controller.MenuController=org.springframework.stereotype.Component
+com.dtinone.modules.controller.RoleController=org.springframework.stereotype.Component
+com.dtinone.modules.controller.SendMsg=org.springframework.stereotype.Component
+com.dtinone.modules.controller.UserController=org.springframework.stereotype.Component
+com.dtinone.modules.service.impl.MenuServiceImpl=org.springframework.stereotype.Component
+com.dtinone.modules.service.impl.RoleServiceImpl=org.springframework.stereotype.Component
+com.dtinone.modules.service.impl.UserServiceImpl=org.springframework.stereotype.Component

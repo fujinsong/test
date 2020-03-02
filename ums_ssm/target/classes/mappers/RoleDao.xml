@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dtinone.modules.dao.RoleDao">
+    <resultMap id="roleResultMap" type="role">
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <select id="findAllValidate"  resultMap="roleResultMap">
+        SELECT * FROM `role` WHERE status != 1
+    </select>
+
+    <select id="findValidateByName" parameterType="String" resultMap="roleResultMap">
+        SELECT * FROM `role` WHERE name = #{name} and status!=1
+    </select>
+
+    <select id="get" parameterType="String" resultMap="roleResultMap">
+        SELECT * FROM `role` WHERE id = #{id}
+    </select>
+
+    <update id="delete" parameterType="String">
+        UPDATE `role` SET `status` = 1 WHERE id=#{id}
+    </update>
+
+    <!--统计计数-->
+    <select id="count" parameterType="role" resultType="int">
+        select count(*)
+        <include refid="rolePageCommon"></include>
+    </select>
+
+    <select id="find" resultMap="roleResultMap">
+        select *
+        <include refid="rolePageCommon"></include>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <update id="updatePart" parameterType="role">
+        update `role`
+        set name=#{name},update_time=#{updateTime}
+         where id=#{id}
+    </update>
+
+    <insert id="add" parameterType="role">
+        insert into `role`(id,name,status,create_time)
+        values (#{id},#{name},#{status},#{createTime})
+    </insert>
+
+    <sql id="rolePageCommon">
+        from `role`
+        <where>
+            <if test="role.name!=null and role.name!=''">
+                and `name`=#{role.name}
+            </if>
+            <if test="role.status!=null and role.status!='-1'">
+                and status=#{role.status}
+            </if>
+        </where>
+    </sql>
+
+    <!--修改角色信息-->
+    <update id="update" parameterType="role">
+        update `role`
+        set name=#{name},create_time=#{CreateTime},
+        update_time=#{updateTime},status=#{status},mobile=#{mobile}
+        where id=#{id}
+    </update>
+</mapper>

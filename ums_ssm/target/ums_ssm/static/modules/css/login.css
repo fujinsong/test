@@ -1,0 +1,55 @@
+body {
+    background-image: url("../images/background.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.loginForm {
+    width: 500px;
+    height: 300px;
+    margin: 0px auto;
+}
+
+.page-header {
+    margin-left: 85px;
+    border-bottom: 0px solid #eee;
+}
+
+.btns {
+    margin-top: 22px;
+    margin-left: 37.5px;
+}
+
+.verifiLable {
+    font-size: 18px;
+}
+
+.checkbox {
+    float: left;
+}
+
+.checkbox + .checkbox, .radio + .radio {
+    margin-top: 10px;
+    margin-left: 150px;
+}
+
+.col-sm-offset-2 {
+    margin: 0px;
+}
+
+.myLoginBtn {
+    width: 341px;
+    margin-left: -40px;
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.myLoginBtn:hover {
+    background-color: #F9E4E4;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: indigo;
+}

@@ -1,0 +1,44 @@
+.table, .pageDiv {
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 98%;
+    text-align: -webkit-right;
+}
+
+.form-search {
+    background-color: #E3E0E0;
+    float: left;
+    width: 98%;
+    margin: 10px auto;
+    margin-left: 1%;
+}
+
+.pageDiv {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.form-search > div {
+    float: left;
+    margin-right: 20px;
+    margin-bottom:15px;
+}
+
+.form-search > .input-group > input,.form-search > .input-group >select {
+    width: 140px;
+}
+
+.goPageBtn {
+    float: left;
+}
+.search_date_to{
+    background-color: #E3E0E0;
+    width: 15px;
+    border: 0px;
+}
+.form-search > .input-group>.search-btn{
+    width: 80px;
+}
+.Wdate{
+    background: #fff url(../../sources/My97DatePicker/skin/datePicker.gif) no-repeat right;
+}

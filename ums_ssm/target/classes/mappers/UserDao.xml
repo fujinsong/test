@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dtinone.modules.dao.UserDao">
+    <resultMap id="userResultMap" type="user">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="realName" column="real_name"/>
+        <result property="password" column="password"/>
+        <result property="sex" column="sex"/>
+        <result property="loginTime" column="login_time"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="status" column="status"/>
+        <result property="mobile" column="mobile"/>
+        <association property="role" javaType="role">
+            <id property="id" column="role_id"/>
+            <result property="name" column="name" />
+        </association>
+    </resultMap>
+    <select id="findByMobile" parameterType="String" resultMap="userResultMap">
+        SELECT * FROM `user` WHERE mobile = #{mobile}
+    </select>
+
+    <select id="findValidateByUserName" parameterType="String" resultMap="userResultMap">
+        SELECT * FROM `user` WHERE user_name = #{userName} and status!=1
+    </select>
+
+    <select id="findValidateByMobile" parameterType="String" resultMap="userResultMap">
+        SELECT * FROM `user` WHERE mobile = #{mobile} and status!=1
+    </select>
+
+
+    <select id="get" parameterType="String" resultMap="userResultMap">
+        SELECT u.*,r.id role_id,r.name
+        from `user` u
+        left join `role` r ON u.role_id=r.id
+        WHERE u.id = #{id}
+    </select>
+
+    <update id="delete" parameterType="String">
+        UPDATE `user` SET `status` = 1 WHERE id=#{id}
+    </update>
+
+    <!--统计计数-->
+    <select id="count" parameterType="user" resultType="int">
+        select count(*)
+        <include refid="userPageCommon"></include>
+    </select>
+
+    <select id="find" resultMap="userResultMap">
+        select u.*,r.id role_id,r.name
+        <include refid="userPageCommon"></include>
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="findByUser" resultMap="userResultMap">
+        select u.*,r.id role_id,r.name
+        <include refid="userPageCommon"></include>
+    </select>
+
+    <select id="findRoleIdByUser" resultType="string">
+        select role_id
+
+        from `user`
+
+        where user_name = #{userName}
+    </select>
+
+
+    <sql id="userPageCommon">
+        from `user` u
+        left join `role` r ON u.role_id=r.id
+        <where>
+            <if test="user.realName!=null and user.realName!=''">
+                and u.real_name=#{user.realName}
+            </if>
+            <if test="user.userName!=null and user.userName!=''">
+                and u.user_name=#{user.userName}
+            </if>
+            <if test="user.sex!=null and user.sex!='-1'">
+                and u.sex=#{user.sex}
+            </if>
+            <if test="user.startLoginTime!=null and user.startLoginTime!=''">
+                and u.login_time>=#{user.startLoginTime}
+            </if>
+            <if test="user.endLoginTime!=null and user.endLoginTime!=''">
+                <![CDATA[and u.login_time<=#{user.endLoginTime}]]>
+            </if>
+            <if test="user.startRegisterTime!=null and user.startRegisterTime!=''">
+                and u.register_time>=#{user.startRegisterTime}
+            </if>
+            <if test="user.endRegisterTime!=null and user.endRegisterTime!=''">
+                <![CDATA[and u.register_time<=#{user.endRegisterTime}]]>
+            </if>
+            <if test="user.status!=null and user.status!='-1'">
+                and u.status=#{user.status}
+            </if>
+            <if test="user.mobile!=null and user.mobile!=''">
+                and u.mobile=#{user.mobile}
+            </if>
+            <if test="user.role!=null and user.role.id!=null and user.role.id!='' and user.role.id!='-1'">
+                and u.role_id=#{user.role.id}
+            </if>
+        </where>
+    </sql>
+    <!--修改用户信息-->
+    <update id="update" parameterType="user">
+        update `user`
+        set real_name=#{realName},user_name=#{userName},sex=#{sex},login_time=#{loginTime},
+        register_time=#{registerTime},status=#{status},role_id=#{role.id},mobile=#{mobile}
+         where id=#{id}
+    </update>
+    <update id="updatePart" parameterType="user">
+        update `user`
+        set real_name=#{realName},user_name=#{userName},sex=#{sex},role_id=#{role.id},mobile=#{mobile}
+         where id=#{id}
+    </update>
+
+    <insert id="add" parameterType="user">
+        insert into `user`(id,real_name,user_name,sex,register_time,status,role_id,mobile)
+        values (#{id},#{realName},#{userName},#{sex},#{registerTime},#{status},#{role.id},#{mobile})
+    </insert>
+</mapper>
+
+
+

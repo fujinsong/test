@@ -20,7 +20,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <spring-version>5.2.1.RELEASE</spring-version>
     <log4j-spring-version>2.12.1</log4j-spring-version>
-    <mysql-version>5.1.48</mysql-version>
+    <mysql-version>8.0.16</mysql-version>
     <json-version>2.9.9</json-version>
     <mybatis-version>3.5.2</mybatis-version>
   </properties>

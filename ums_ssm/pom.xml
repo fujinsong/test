@@ -21,7 +21,7 @@
     <spring-version>5.2.1.RELEASE</spring-version>
     <log4j-spring-version>2.12.1</log4j-spring-version>
     <mysql-version>5.1.48</mysql-version>
-    <json-version>2.9.9</json-version>
+    <json-version>2.13.4.1</json-version>
     <mybatis-version>3.5.2</mybatis-version>
   </properties>
 
